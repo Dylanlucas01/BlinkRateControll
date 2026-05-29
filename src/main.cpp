@@ -34,17 +34,17 @@ int main() {
         blinkState = !blinkState;
         UART_println(blinkState ? "Blinking started" : "Blinking stopped");
     }
-    
-    // Adjust blink interval
-    adjustInterval(increaseButton, interval, true);
-
-    adjustInterval(decreaseButton, interval, false);
 
     // LED blinking
     if(blinkState) {
-        ledBlink(blinkState, interval);
+        ledBlink(blinkState, interval); // Toggel LED Blinking on/off
+
+        // Listen for increase/decrease button presses while blinking
+        // Adjust interval based on button presses
+        adjustInterval(increaseButton, interval, true);
+        adjustInterval(decreaseButton, interval, false);
     } else {
-        PORTB &= ~(1 << PB5);
+        PORTB &= ~(1 << PB5); // Ensure LED is off when not blinking
     }
   }
 }
@@ -63,15 +63,11 @@ void ledBlink(bool& blinkState, uint16_t& interval) {
     ledState = !ledState;
     blinkCount++;
 
+    // This creates the LED blinking pattern
     if(ledState) {
-      PORTB |= (1 << PB5);
-      UART_println("LED toggled ON");
+      PORTB |= (1 << PB5); // Turn LED on
     } else {
-        PORTB &= ~(1 << PB5);
-        UART_println("LED toggled OFF");
+        PORTB &= ~(1 << PB5); // Turn LED off
     }
-
-    UART_println("Blink Count:");
-    UART_print_int(blinkCount);
   }
 }
