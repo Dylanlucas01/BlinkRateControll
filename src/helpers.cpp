@@ -54,8 +54,8 @@ bool buttonPressed(const Button& button) {
 
 void updateButton(Button& button, volatile uint8_t& pinRegister, uint8_t pin) {
     button.lastState = button.currentState;
-
-    button.currentState = pinRegister & (1 << pin);
+    // Button pressed = pin LOW (0), so invert logic
+    button.currentState = !(pinRegister & (1 << pin));
 }
 
 void adjustInterval(Button& button, uint16_t& interval, bool increase) {
@@ -65,12 +65,16 @@ void adjustInterval(Button& button, uint16_t& interval, bool increase) {
         interval -= 100;
         UART_println("Blink interval rate increased");
         UART_print_int(interval);
+      } else {
+        UART_println("Blink interval rate is at maximum speed of 100 milliseconds");
       }
     } else {
       if(interval < 60000) {
         interval += 100;
         UART_println("Blink interval rate decreased");
         UART_print_int(interval);
+      } else {
+        UART_println("Blink interval rate is at minimum speed of 60 seconds");
       }
     }
   };
