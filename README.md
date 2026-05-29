@@ -6,6 +6,8 @@ I designed this with the use of an Arduino Uno R3.
 
 There is an LED and three buttons to control the LED to blink (on/off, blink faster, blink slower)
 
+<img width="4065" height="3317" alt="BlinkRateControl" src="https://github.com/user-attachments/assets/13447eac-5b05-4837-9a5c-3ffe61ec46b9" />
+
 Built using PlatformIO, it provides a simple and extensible framework for experimenting with timing, digital output, and embedded C++ development by bare metal coding.
 
 ## Features
